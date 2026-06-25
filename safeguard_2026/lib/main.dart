@@ -1,7 +1,6 @@
-// Main entry point for SafeGuard 2026
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'sos_logic.dart';
 
 void main() {
   runApp(SafeGuardApp());
@@ -12,63 +11,96 @@ class SafeGuardApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SafeGuard 2026',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        brightness: Brightness.dark,
-      ),
-      home: HomeScreen(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: ContactManager(),
     );
   }
 }
 
-class HomeScreen extends StatefulWidget {
+class ContactManager extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ContactManagerState createState() => _ContactManagerState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  bool _isServiceActive = false;
+class _ContactManagerState extends State<ContactManager> {
+  List<String> _contacts = [];
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState() ;
+    _loadContacts();
+  }
+
+  _loadContacts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _contacts = prefs.getStringList('contacts') ?? [];
+    });
+  }
+
+  _addContact() async {
+    if (_controller.text.isNotEmpty) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      _contacts.add(_controller.text);
+      await prefs.setStringList('contacts', _contacts);
+      _controller.clear();
+      setState(() {});
+    }
+  }
+
+  _removeContact(int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _contacts.removeAt(index);
+    await prefs.setStringList('contacts', _contacts);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('SafeGuard 2026')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              _isServiceActive ? Icons.shield : Icons.shield_outlined,
-              size: 100,
-              color: _isServiceActive ? Colors.green : Colors.red,
+      appBar: AppBar(title: Text('Emergency Contacts')),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(hintText: 'Enter Phone Number'),
+                    keyboardType: TextInputType.phone,
+                  ),
+                ),
+                IconButton(icon: Icon(Icons.add), onPressed: _addContact),
+              ],
             ),
-            SizedBox(height: 20),
-            Text(
-              _isServiceActive ? 'System Active' : 'System Inactive',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _isServiceActive = !_isServiceActive;
-                });
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _contacts.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_contacts[index]),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _removeContact(index),
+                  ),
+                );
               },
-              child: Text(_isServiceActive ? 'Deactivate SOS' : 'Activate SOS'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                'Tip: Press Volume Up 3 times to trigger Ghost SOS.',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              onPressed: () => SOSLogic.startSOS(_contacts),
+              child: Text('TEST SOS (Manual)', style: TextStyle(color: Colors.white)),
             ),
-          ],
-        ),
+          ),
+          Text("Note: Press Volume Up 4 times to trigger automatically.", style: TextStyle(fontSize: 12, color: Colors.grey))
+        ],
       ),
     );
   }

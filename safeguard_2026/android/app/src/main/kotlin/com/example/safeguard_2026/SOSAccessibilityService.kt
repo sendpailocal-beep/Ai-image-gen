@@ -3,7 +3,6 @@ package com.example.safeguard_2026
 import android.accessibilityservice.AccessibilityService
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
-import android.util.Log
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -14,38 +13,33 @@ class SOSAccessibilityService : AccessibilityService() {
     private val handler = Handler(Looper.getMainLooper())
     private val resetCountRunnable = Runnable { volumeUpCount = 0 }
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        // Not used
-    }
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 
-    override fun onInterrupt() {
-        // Not used
-    }
+    override fun onInterrupt() {}
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        val keyCode = event.keyCode
-
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.action == KeyEvent.ACTION_DOWN) {
+        if (event.keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.action == KeyEvent.ACTION_DOWN) {
             volumeUpCount++
-            Log.d("SOSService", "Volume Up Count: $volumeUpCount")
 
             handler.removeCallbacks(resetCountRunnable)
-            handler.postDelayed(resetCountRunnable, 2000) // Reset count after 2 seconds
+            handler.postDelayed(resetCountRunnable, 3000) // Reset if no press for 3 seconds
 
-            if (volumeUpCount >= 3) {
+            if (volumeUpCount >= 4) {
                 triggerSOS()
                 volumeUpCount = 0
             }
-            return true // Consume the event so volume doesn't actually change
+            return false // Allow the OS to still process the volume change if needed
         }
-
         return super.onKeyEvent(event)
     }
 
     private fun triggerSOS() {
-        Log.d("SOSService", "SOS TRIGGERED!")
-        val intent = Intent("com.example.safeguard_2026.TRIGGER_SOS")
-        intent.setPackage(packageName)
-        sendBroadcast(intent)
+        // Bring the app to foreground and start SOS logic
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        intent?.let {
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            it.putExtra("trigger_sos", true)
+            startActivity(it)
+        }
     }
 }
