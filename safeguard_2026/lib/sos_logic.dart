@@ -3,39 +3,30 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SOSLogic {
-  static Future<void> startSOS(List<String> contacts) async {
-    if (contacts.isEmpty) return;
+  static Future<void> trigger() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String num = prefs.getString('num') ?? "";
+    bool useWA = prefs.getBool('wa') ?? false;
 
-    // 1. Get current Location
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high
-    );
+    if (num.isEmpty) return;
 
-    String mapsUrl = "https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}";
-    String message = "EMERGENCY! I am in danger. My live location: $mapsUrl";
+    Position pos = await Geolocator.getCurrentPosition();
+    String maps = "https://www.google.com/maps?q=${pos.latitude},${pos.longitude}";
+    String msg = "EMERGENCY! My location: $maps";
 
-    // 2. Loop through contacts
-    for (String number in contacts) {
-      // Send SMS
-      final Uri smsUri = Uri(
-        scheme: 'sms',
-        path: number,
-        queryParameters: <String, String>{'body': message},
-      );
-
-      // Auto Call
-      final Uri telUri = Uri(scheme: 'tel', path: number);
-
-      if (await canLaunchUrl(smsUri)) {
-        await launchUrl(smsUri);
-      }
-
-      // Small delay between actions
-      await Future.delayed(Duration(seconds: 2));
-
-      if (await canLaunchUrl(telUri)) {
-        await launchUrl(telUri);
-      }
+    if (useWA) {
+      // WhatsApp Mode (Free via MB)
+      final waUrl = Uri.parse("https://wa.me/$num?text=${Uri.encodeComponent(msg)}");
+      if (await canLaunchUrl(waUrl)) await launchUrl(waUrl, mode: LaunchMode.externalApplication);
+    } else {
+      // Default Phone/SMS Mode
+      final smsUrl = Uri(scheme: 'sms', path: num, queryParameters: {'body': msg});
+      if (await canLaunchUrl(smsUrl)) await launchUrl(smsUrl);
     }
+
+    // Always attempt a voice call as backup
+    await Future.delayed(Duration(seconds: 2));
+    final telUrl = Uri(scheme: 'tel', path: num);
+    if (await canLaunchUrl(telUrl)) await launchUrl(telUrl);
   }
 }

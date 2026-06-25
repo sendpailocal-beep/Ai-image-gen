@@ -2,105 +2,75 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'sos_logic.dart';
 
-void main() {
-  runApp(SafeGuardApp());
-}
+void main() => runApp(MaterialApp(home: SafeGuardHome()));
 
-class SafeGuardApp extends StatelessWidget {
+class SafeGuardHome extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SafeGuard 2026',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: ContactManager(),
-    );
-  }
+  _SafeGuardHomeState createState() => _SafeGuardHomeState();
 }
 
-class ContactManager extends StatefulWidget {
-  @override
-  _ContactManagerState createState() => _ContactManagerState();
-}
-
-class _ContactManagerState extends State<ContactManager> {
-  List<String> _contacts = [];
+class _SafeGuardHomeState extends State<SafeGuardHome> {
+  String _guardianNum = "";
+  bool _useWhatsApp = false;
   final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
-    super.initState() ;
-    _loadContacts();
+    super.initState();
+    _loadSettings();
   }
 
-  _loadContacts() async {
+  _loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _contacts = prefs.getStringList('contacts') ?? [];
+      _guardianNum = prefs.getString('num') ?? "";
+      _useWhatsApp = prefs.getBool('wa') ?? false;
+      _controller.text = _guardianNum;
     });
   }
 
-  _addContact() async {
-    if (_controller.text.isNotEmpty) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      _contacts.add(_controller.text);
-      await prefs.setStringList('contacts', _contacts);
-      _controller.clear();
-      setState(() {});
-    }
+  _save(String val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('num', val);
+    setState(() => _guardianNum = val);
   }
 
-  _removeContact(int index) async {
+  _toggleWA(bool val) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _contacts.removeAt(index);
-    await prefs.setStringList('contacts', _contacts);
-    setState(() {});
+    await prefs.setBool('wa', val);
+    setState(() => _useWhatsApp = val);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Emergency Contacts')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(hintText: 'Enter Phone Number'),
-                    keyboardType: TextInputType.phone,
-                  ),
-                ),
-                IconButton(icon: Icon(Icons.add), onPressed: _addContact),
-              ],
+      appBar: AppBar(title: Text('SafeGuard 2026')),
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(labelText: "Guardian Number", border: OutlineInputBorder()),
+              keyboardType: TextInputType.phone,
+              onChanged: _save,
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _contacts.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_contacts[index]),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => _removeContact(index),
-                  ),
-                );
-              },
+            SwitchListTile(
+              title: Text("Use WhatsApp (Data Mode)"),
+              subtitle: Text("Uses MB instead of SMS credit"),
+              value: _useWhatsApp,
+              onChanged: _toggleWA,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              onPressed: () => SOSLogic.startSOS(_contacts),
-              child: Text('TEST SOS (Manual)', style: TextStyle(color: Colors.white)),
+            Spacer(),
+            Container(
+              padding: EdgeInsets.all(15),
+              color: Colors.red.shade100,
+              child: Text("4x Volume Up = EMERGENCY SOS", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
             ),
-          ),
-          Text("Note: Press Volume Up 4 times to trigger automatically.", style: TextStyle(fontSize: 12, color: Colors.grey))
-        ],
+            SizedBox(height: 10),
+            Text("Setup: 1. Add Number. 2. Turn on Accessibility. DONE.", style: TextStyle(fontSize: 12)),
+          ],
+        ),
       ),
     );
   }
