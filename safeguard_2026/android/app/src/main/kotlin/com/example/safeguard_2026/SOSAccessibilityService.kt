@@ -4,10 +4,13 @@ import android.accessibilityservice.AccessibilityService
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 
 class SOSAccessibilityService : AccessibilityService() {
-    private var isUpPressed = false
-    private var isDownPressed = false
+    private var pressCount = 0
+    private val handler = Handler(Looper.getMainLooper())
+    private val resetTask = Runnable { pressCount = 0 }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
     override fun onInterrupt() {}
@@ -16,18 +19,17 @@ class SOSAccessibilityService : AccessibilityService() {
         val keyCode = event.keyCode
         val action = event.action
 
-        if (action == KeyEvent.ACTION_DOWN) {
-            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) isUpPressed = true
-            if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) isDownPressed = true
+        // Trigger on ANY volume button (Up or Down)
+        if (action == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            pressCount++
 
-            if (isUpPressed && isDownPressed) {
-                isUpPressed = false
-                isDownPressed = false
+            handler.removeCallbacks(resetTask)
+            handler.postDelayed(resetTask, 3000) // Reset if no activity for 3 seconds
+
+            if (pressCount >= 4) {
+                pressCount = 0
                 triggerSOS()
             }
-        } else if (action == KeyEvent.ACTION_UP) {
-            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) isUpPressed = false
-            if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) isDownPressed = false
         }
 
         return super.onKeyEvent(event)

@@ -1,15 +1,15 @@
-# SafeGuard 2026: Both-Volume SOS
+# SafeGuard 2026: Easy Volume SOS
 
-Ye app dunya ki sabse asaan aur tez SOS app hai. Is mein "Both Volume" button trigger hai jo phone lock hone par bhi kaam karta hai.
+Is app mein emergency trigger sabse asaan hai: **Volume Up ho ya Down, bas 4 baar dabayein.**
 
 ### Features:
-*   **Dual Mode:** SMS Mode (Default) ya WhatsApp Mode (Free via MBs).
-*   **Both-Volume Trigger:** Volume Up aur Volume Down dono ek saath dabane par SOS chala jayega.
-*   **Live Location:** Guardian ko Google Maps ka link jayega taake wo aapko live track kar sakein.
+*   **Dual Mode:** SMS ya WhatsApp (Free via MBs).
+*   **Any-Volume Trigger:** 4 baar kisi bhi volume button ko dabane par SOS trigger ho jayega.
+*   **Live Location:** Guardian ko foran Google Maps tracking link mil jayega.
 
 ### 3-Step Setup:
-1.  **Number Likhein:** Guardian ka number dalein.
-2.  **Mode Chunein:** WhatsApp ya SMS.
+1.  **Number Likhein:** Guardian ka phone number dalein.
+2.  **Mode Chunein:** WhatsApp ya SMS choose karein.
 3.  **Accessibility ON:** Settings mein ja kar "SafeGuard 2026" ko ON kar dein.
 
-**Bas!** Ab jab bhi khatra ho, dono Volume button ek saath daba kar rakhein.
+**Bas!** Ab aap mehfooz hain. Kisi bhi volume button ko 4 baar dabayein aur madad bulayein.
