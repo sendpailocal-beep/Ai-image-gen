@@ -6,29 +6,38 @@ import android.view.accessibility.AccessibilityEvent
 import android.content.Intent
 
 class SOSAccessibilityService : AccessibilityService() {
-    private var count = 0
-    private var lastTime: Long = 0
+    private var isUpPressed = false
+    private var isDownPressed = false
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
     override fun onInterrupt() {}
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        if (event.keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.action == KeyEvent.ACTION_DOWN) {
-            val now = System.currentTimeMillis()
-            if (now - lastTime > 2000) count = 0 // Reset if too slow
+        val keyCode = event.keyCode
+        val action = event.action
 
-            lastTime = now
-            count++
+        if (action == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) isUpPressed = true
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) isDownPressed = true
 
-            if (count >= 4) {
-                count = 0
-                val intent = packageManager.getLaunchIntentForPackage(packageName)
-                intent?.let {
-                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(it)
-                }
+            if (isUpPressed && isDownPressed) {
+                isUpPressed = false
+                isDownPressed = false
+                triggerSOS()
             }
+        } else if (action == KeyEvent.ACTION_UP) {
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) isUpPressed = false
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) isDownPressed = false
         }
+
         return super.onKeyEvent(event)
+    }
+
+    private fun triggerSOS() {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        intent?.let {
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(it)
+        }
     }
 }

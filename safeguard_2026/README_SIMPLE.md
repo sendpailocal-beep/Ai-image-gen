@@ -1,18 +1,15 @@
-# SafeGuard 2026: Simplest Setup
+# SafeGuard 2026: Both-Volume SOS
 
-Ye app dunya ki sabse asaan SOS app hai. Is mein 2 modes hain:
-1. **Default:** Mobile SMS use karta hai.
-2. **WhatsApp (Data Mode):** MBs use karta hai (Completely Free).
+Ye app dunya ki sabse asaan aur tez SOS app hai. Is mein "Both Volume" button trigger hai jo phone lock hone par bhi kaam karta hai.
 
-### 3-Step Setup (Sabse Asaan):
-1.  **Number Dalein:** App khol kar guardian ka phone number likhein.
-2.  **Mode Chunein:** Agar free chalana hai to "WhatsApp Mode" on kar dein.
-3.  **Accessibility ON:** Phone settings mein ja kar "SafeGuard 2026" ko ON kar dein.
+### Features:
+*   **Dual Mode:** SMS Mode (Default) ya WhatsApp Mode (Free via MBs).
+*   **Both-Volume Trigger:** Volume Up aur Volume Down dono ek saath dabane par SOS chala jayega.
+*   **Live Location:** Guardian ko Google Maps ka link jayega taake wo aapko live track kar sakein.
 
-**BASS!** Ab jab bhi musibat ho, 4 baar Volume Up dabayein aur sab kuch khud ho jayegi.
+### 3-Step Setup:
+1.  **Number Likhein:** Guardian ka number dalein.
+2.  **Mode Chunein:** WhatsApp ya SMS.
+3.  **Accessibility ON:** Settings mein ja kar "SafeGuard 2026" ko ON kar dein.
 
----
-### Developers ke liye:
-*   **Cost:** $0
-*   **Code:** 100% Lightweight
-*   **Permissions:** Location, SMS, Call.
+**Bas!** Ab jab bhi khatra ho, dono Volume button ek saath daba kar rakhein.

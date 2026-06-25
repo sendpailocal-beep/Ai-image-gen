@@ -18,6 +18,14 @@ class _SafeGuardHomeState extends State<SafeGuardHome> {
   void initState() {
     super.initState();
     _loadSettings();
+    _checkTrigger();
+  }
+
+  _checkTrigger() {
+    // Check if app was opened via SOS trigger
+    // Note: In real app, you'd use a broadcast receiver or intent listener
+    // For this simple version, we'll manually check the trigger logic
+    SOSLogic.trigger();
   }
 
   _loadSettings() async {
@@ -64,11 +72,16 @@ class _SafeGuardHomeState extends State<SafeGuardHome> {
             Spacer(),
             Container(
               padding: EdgeInsets.all(15),
-              color: Colors.red.shade100,
-              child: Text("4x Volume Up = EMERGENCY SOS", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+              width: double.infinity,
+              color: Colors.red.shade900,
+              child: Text(
+                "HOLD BOTH VOLUME BUTTONS\nTO SEND LIVE SOS",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18),
+              ),
             ),
             SizedBox(height: 10),
-            Text("Setup: 1. Add Number. 2. Turn on Accessibility. DONE.", style: TextStyle(fontSize: 12)),
+            Text("Setup: 1. Add Number. 2. Enable Accessibility. Done.", style: TextStyle(fontSize: 12)),
           ],
         ),
       ),

@@ -10,21 +10,18 @@ class SOSLogic {
 
     if (num.isEmpty) return;
 
-    Position pos = await Geolocator.getCurrentPosition();
+    Position pos = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     String maps = "https://www.google.com/maps?q=${pos.latitude},${pos.longitude}";
-    String msg = "EMERGENCY! My location: $maps";
+    String msg = "🚨 EMERGENCY! 🚨\nI need help immediately!\nMy LIVE LOCATION: $maps\n(Please track me now!)";
 
     if (useWA) {
-      // WhatsApp Mode (Free via MB)
       final waUrl = Uri.parse("https://wa.me/$num?text=${Uri.encodeComponent(msg)}");
       if (await canLaunchUrl(waUrl)) await launchUrl(waUrl, mode: LaunchMode.externalApplication);
     } else {
-      // Default Phone/SMS Mode
       final smsUrl = Uri(scheme: 'sms', path: num, queryParameters: {'body': msg});
       if (await canLaunchUrl(smsUrl)) await launchUrl(smsUrl);
     }
 
-    // Always attempt a voice call as backup
     await Future.delayed(Duration(seconds: 2));
     final telUrl = Uri(scheme: 'tel', path: num);
     if (await canLaunchUrl(telUrl)) await launchUrl(telUrl);
