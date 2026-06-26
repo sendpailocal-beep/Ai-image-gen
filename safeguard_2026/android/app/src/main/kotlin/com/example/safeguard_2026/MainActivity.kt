@@ -16,10 +16,9 @@ class MainActivity: FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Check if we were launched by the SOS service
         if (intent.getBooleanExtra("sos_triggered", false)) {
             methodChannel?.invokeMethod("triggerSOS", null)
-            intent.putExtra("sos_triggered", false) // Reset to avoid re-triggering
+            intent.putExtra("sos_triggered", false)
         }
     }
 
