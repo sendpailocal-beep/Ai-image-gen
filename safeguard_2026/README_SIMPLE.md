@@ -1,15 +1,16 @@
-# SafeGuard 2026: Easy Volume SOS
+# SafeGuard 2026: Multi-Contact SOS
 
-Is app mein emergency trigger sabse asaan hai: **Volume Up ho ya Down, bas 4 baar dabayein.**
+Ye app aapki requirements ke mutabiq poori tarah ready hai.
 
-### Features:
-*   **Dual Mode:** SMS ya WhatsApp (Free via MBs).
-*   **Any-Volume Trigger:** 4 baar kisi bhi volume button ko dabane par SOS trigger ho jayega.
-*   **Live Location:** Guardian ko foran Google Maps tracking link mil jayega.
+### Key Features (As requested):
+*   **Multi-Contact Support:** Aap jitne chahein contacts add kar sakte hain. App har contact ko baari-baari alert bhejegi.
+*   **Any Volume Trigger:** 4 baar Volume Up ya Down dabane par SOS chalu ho jayega.
+*   **Live Location & Call:** Har contact ko Google Maps link jayega aur phir unhe Call mil jayegi.
+*   **Dual Mode:** WhatsApp (Data/MBs) ya Default SMS.
 
-### 3-Step Setup:
-1.  **Number Likhein:** Guardian ka phone number dalein.
-2.  **Mode Chunein:** WhatsApp ya SMS choose karein.
-3.  **Accessibility ON:** Settings mein ja kar "SafeGuard 2026" ko ON kar dein.
+### Setup (Very Simple):
+1.  **Add Numbers:** App khol kar apne saare emergency contacts ke numbers add karein.
+2.  **Accessibility ON:** Settings mein ja kar "SafeGuard 2026" ko enable karein.
+3.  **Permissions:** Location ko "Allow all the time" par rakhein.
 
-**Bas!** Ab aap mehfooz hain. Kisi bhi volume button ko 4 baar dabayein aur madad bulayein.
+**Kaam Khatam!** Ab jab bhi musibat ho, 4 baar volume button dabayein, app baari-baari sab ko location bhejegi aur call karegi.

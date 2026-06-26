@@ -10,7 +10,7 @@ import android.os.Looper
 class SOSAccessibilityService : AccessibilityService() {
     private var pressCount = 0
     private val handler = Handler(Looper.getMainLooper())
-    private val resetTask = Runnable { pressCount = 0 }
+    private val resetCount = Runnable { pressCount = 0 }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
     override fun onInterrupt() {}
@@ -19,12 +19,12 @@ class SOSAccessibilityService : AccessibilityService() {
         val keyCode = event.keyCode
         val action = event.action
 
-        // Trigger on ANY volume button (Up or Down)
+        // Listen for ANY Volume Up or Volume Down button
         if (action == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
             pressCount++
 
-            handler.removeCallbacks(resetTask)
-            handler.postDelayed(resetTask, 3000) // Reset if no activity for 3 seconds
+            handler.removeCallbacks(resetCount)
+            handler.postDelayed(resetCount, 3000) // Reset counter if no press for 3 seconds
 
             if (pressCount >= 4) {
                 pressCount = 0
@@ -39,6 +39,7 @@ class SOSAccessibilityService : AccessibilityService() {
         val intent = packageManager.getLaunchIntentForPackage(packageName)
         intent?.let {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            it.putExtra("sos_triggered", true)
             startActivity(it)
         }
     }
