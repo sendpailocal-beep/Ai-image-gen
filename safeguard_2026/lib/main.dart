@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 import 'sos_logic.dart';
 
 void main() => runApp(MaterialApp(
@@ -16,18 +17,29 @@ class _SafeGuardHomeState extends State<SafeGuardHome> {
   List<String> _contacts = [];
   bool _useWhatsApp = false;
   final TextEditingController _controller = TextEditingController();
+  static const platform = MethodChannel('com.example.safeguard_2026/trigger');
 
   @override
   void initState() {
     super.initState();
     _loadData();
-    // In a real app, you'd check for the trigger here if the app is launched via the service
-    _checkForTrigger();
+    _setupMethodChannel();
   }
 
-  _checkForTrigger() async {
-    // This is just a placeholder to simulate the trigger when the app opens via Accessibility Service
-    // In production, the service starts this logic
+  _setupMethodChannel() {
+    platform.setMethodCallHandler((call) async {
+      if (call.method == "triggerSOS") {
+        _startSOSProcess();
+      }
+    });
+  }
+
+  _startSOSProcess() async {
+    // Show a small overlay or dialog that SOS is starting
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("SOS TRIGGERED! Alerting contacts..."), backgroundColor: Colors.red)
+    );
+    await SOSLogic.trigger();
   }
 
   _loadData() async {
