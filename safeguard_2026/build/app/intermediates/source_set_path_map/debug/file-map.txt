@@ -1,0 +1,7 @@
+com.example.safeguard_2026.app-debug-0 /app/safeguard_2026/android/app/src/debug/res
+com.example.safeguard_2026.app-main-1 /app/safeguard_2026/android/app/src/main/res
+com.example.safeguard_2026.app-pngs-2 /app/safeguard_2026/build/app/generated/res/pngs/debug
+com.example.safeguard_2026.app-resValues-3 /app/safeguard_2026/build/app/generated/res/resValues/debug
+com.example.safeguard_2026.app-packageDebugResources-4 /app/safeguard_2026/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.example.safeguard_2026.app-packageDebugResources-5 /app/safeguard_2026/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.example.safeguard_2026.app-merged_res-6 /app/safeguard_2026/build/app/intermediates/merged_res/debug

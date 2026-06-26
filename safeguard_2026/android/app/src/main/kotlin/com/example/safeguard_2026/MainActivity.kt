@@ -7,23 +7,27 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "com.example.safeguard_2026/trigger"
+    private var methodChannel: MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-    }
-
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        if (intent.getBooleanExtra("sos_triggered", false)) {
-            MethodChannel(flutterEngine!!.dartExecutor.binaryMessenger, CHANNEL).invokeMethod("triggerSOS", null)
-        }
+        methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
     }
 
     override fun onResume() {
         super.onResume()
+        // Check if we were launched by the SOS service
         if (intent.getBooleanExtra("sos_triggered", false)) {
-            MethodChannel(flutterEngine!!.dartExecutor.binaryMessenger, CHANNEL).invokeMethod("triggerSOS", null)
-            intent.putExtra("sos_triggered", false) // Reset
+            methodChannel?.invokeMethod("triggerSOS", null)
+            intent.putExtra("sos_triggered", false) // Reset to avoid re-triggering
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        if (intent.getBooleanExtra("sos_triggered", false)) {
+            methodChannel?.invokeMethod("triggerSOS", null)
         }
     }
 }

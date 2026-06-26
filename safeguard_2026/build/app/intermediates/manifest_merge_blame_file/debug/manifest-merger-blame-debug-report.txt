@@ -1,0 +1,135 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.safeguard_2026"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="35" />
+10
+11    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+11-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:4:5-79
+11-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:4:22-76
+12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+12-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:5:5-81
+12-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:5:22-78
+13    <uses-permission android:name="android.permission.SEND_SMS" />
+13-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:6:5-67
+13-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:6:22-64
+14    <uses-permission android:name="android.permission.CALL_PHONE" />
+14-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:7:5-69
+14-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:7:22-66
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:8:5-67
+15-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:8:22-64
+16
+17    <queries>
+17-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:10:5-23:15
+18        <intent>
+18-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:11:9-14:18
+19            <action android:name="android.intent.action.VIEW" />
+19-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:12:13-65
+19-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:12:21-62
+20
+21            <data android:scheme="https" />
+21-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:13:13-44
+21-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:13:19-41
+22        </intent>
+23        <intent>
+23-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:15:9-18:18
+24            <action android:name="android.intent.action.VIEW" />
+24-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:12:13-65
+24-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:12:21-62
+25
+26            <data android:scheme="sms" />
+26-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:13:13-44
+26-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:13:19-41
+27        </intent>
+28        <intent>
+28-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:19:9-22:18
+29            <action android:name="android.intent.action.DIAL" />
+29-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:20:13-65
+29-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:20:21-62
+30
+31            <data android:scheme="tel" />
+31-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:13:13-44
+31-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:13:19-41
+32        </intent>
+33    </queries>
+34
+35    <application
+35-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:25:5-64:19
+36        android:debuggable="true"
+37        android:extractNativeLibs="false"
+38        android:icon="@mipmap/ic_launcher"
+38-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:27:9-43
+39        android:label="SafeGuard 2026" >
+39-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:26:9-39
+40        <activity
+40-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:29:9-47:20
+41            android:name="com.example.safeguard_2026.MainActivity"
+41-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:30:13-41
+42            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+42-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:34:13-163
+43            android:exported="true"
+43-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:31:13-36
+44            android:hardwareAccelerated="true"
+44-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:35:13-47
+45            android:launchMode="singleTop"
+45-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:32:13-43
+46            android:theme="@style/LaunchTheme"
+46-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:33:13-47
+47            android:windowSoftInputMode="adjustResize" >
+47-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:36:13-55
+48            <meta-data
+48-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:38:13-41:17
+49                android:name="io.flutter.embedding.android.NormalTheme"
+49-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:39:15-70
+50                android:resource="@style/NormalTheme" />
+50-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:40:15-52
+51
+52            <intent-filter>
+52-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:43:13-46:29
+53                <action android:name="android.intent.action.MAIN" />
+53-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:44:17-68
+53-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:44:25-66
+54
+55                <category android:name="android.intent.category.LAUNCHER" />
+55-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:45:17-76
+55-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:45:27-74
+56            </intent-filter>
+57        </activity>
+58
+59        <service
+59-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:49:9-59:19
+60            android:name="com.example.safeguard_2026.SOSAccessibilityService"
+60-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:50:13-52
+61            android:exported="true"
+61-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:52:13-36
+62            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+62-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:51:13-79
+63            <intent-filter>
+63-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:53:13-55:29
+64                <action android:name="android.accessibilityservice.AccessibilityService" />
+64-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:54:17-92
+64-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:54:25-89
+65            </intent-filter>
+66
+67            <meta-data
+67-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:56:13-58:72
+68                android:name="android.accessibilityservice"
+68-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:57:17-60
+69                android:resource="@xml/accessibility_service_config" />
+69-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:58:17-69
+70        </service>
+71
+72        <meta-data
+72-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:61:9-63:33
+73            android:name="flutterEmbedding"
+73-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:62:13-44
+74            android:value="2" />
+74-->/app/safeguard_2026/android/app/src/main/AndroidManifest.xml:63:13-30
+75    </application>
+76
+77</manifest>

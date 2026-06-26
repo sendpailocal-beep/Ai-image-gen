@@ -1,0 +1,55 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.safeguard_2026.app-merged_res-6:/values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "/app/safeguard_2026/android/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "159",
+                        "endOffsets": "210"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "112",
+                        "endColumns": "159",
+                        "endOffsets": "267"
+                    }
+                },
+                {
+                    "source": "/app/safeguard_2026/android/app/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "56",
+                        "endOffsets": "107"
+                    }
+                },
+                {
+                    "source": "/app/safeguard_2026/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "2,5",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,227",
+                        "endLines": "4,7",
+                        "endColumns": "12,12",
+                        "endOffsets": "222,391"
+                    },
+                    "to": {
+                        "startLines": "4,7",
+                        "startColumns": "4,4",
+                        "startOffsets": "272,444",
+                        "endLines": "6,9",
+                        "endColumns": "12,12",
+                        "endOffsets": "439,608"
+                    }
+                }
+            ]
+        }
+    ]
+}
